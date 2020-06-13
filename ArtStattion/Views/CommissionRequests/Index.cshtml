@@ -1,0 +1,140 @@
+﻿@model IEnumerable<ArtStattion.Models.CommissionRequestModel>
+
+@{
+    ViewBag.Title = "Commission Requests Page";
+}
+
+<h2 style="font-family:'fantasy'">Commission Requests Page</h2>
+
+<hr />
+
+
+<p>
+    <a href="@Url.Action("AddOrEdit","CommissionRequests")" class="btn btn-primary"><i class="fa fa-plus"></i>  Request New Commission</a>
+
+</p>
+
+
+<br />
+
+<h3 style="font-family:'fantasy'">Current Commissions</h3>
+<hr />
+
+
+
+
+
+<div class="form-horizontal">
+    <table class="table table-hover table-striped table-responsive table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                @*<th>
+            @Html.DisplayNameFor(model => model.CommID)
+        </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CommDesc)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CommTypeID)
+                </th>
+                
+                
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                
+                <th>
+                    @Html.DisplayNameFor(model => model.Approval)
+                </th>
+
+                @*<th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>*@
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.CommID)
+                </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CommDesc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CommTypeID)
+                </td>
+               
+                <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                
+                <td>
+                    @Html.DisplayFor(modelItem => item.Approval)
+                </td>
+
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>*@
+            <td>
+                @if (!User.IsInRole("Admin"))
+                {
+                    if (item.UserName == User.Identity.Name)
+                    {
+                        <a href="@Url.Action("AddOrEdit","CommissionRequests",new { id=item.CommID})" class="btn btn-primary"><i class="fa fa-pencil"></i>  Edit Commission Details</a>
+                    }
+                }
+                else
+                {
+                    <a href="@Url.Action("AddOrEdit","CommissionRequests",new { id=item.CommID})" class="btn btn-primary"><i class="fa fa-pencil"></i>  Edit Commission Details</a>
+                }
+                
+                @if (User.IsInRole("Admin"))
+                {
+                    <a onclick="Delete(@item.CommID)" class="btn btn-primary"><i class="fa fa-trash"></i> Remove Commission Request</a>
+                }
+
+            </td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+
+
+
+
+
+
+
+
+@section scripts{
+    <script>
+        $(function () {
+            var successMessage = '@TempData["SuccessMessage"]'
+            if (successMessage != '')
+                alertify.success(successMessage);
+            successMessage = '';
+        });
+
+
+
+        function Delete(id) {
+            alertify.confirm('Remove Commission Request', 'Are you sure about removing this Commission request?', function () {
+                window.location.href = '@Url.Action("Delete","CommissionRequests")/' + id;
+            }, null);
+            }
+
+    </script>
+}

@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+    @*<div class="jumbotron jumbotron-fluid" style="background-image: url(D:\YOUTUBE RESOURCES\Endcard elements\Background.png); background-size:cover; height:100px">
+        <div class="container-fluid">
+           
+        </div>
+    </div>*@
+
+    <div class="jumbotron img-responsive" style="background:url(../../IndexImage/Background.png) center top no-repeat; background-size:cover;  " >
+        
+        <div class="container">
+            <h1 style=" background-image: linear-gradient(to right, skyblue ,turquoise, aquamarine, forestgreen,darkgreen); -webkit-background-clip: text;-webkit-text-fill-color: transparent; -moz-background-clip: text;-moz-text-fill-color: transparent; -webkit-text-stroke-color: black; -webkit-text-stroke-width: 2px; font-size:50px ; font-family:'fantasy'; font-weight: bolder;">Welcome To Siddharth's ArtStation</h1>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+        </div>
+        @*<div class="container" style="background-size:contain">
+            <h2 style="color:black; font-size:20rem; font-a" class="text-center">Welcome To Siddharth's ArtStation</h2>
+        </div>*@
+    </div>
+
+<div class="form-horizontal row">
+    <div class="col-md-4">
+        <h2>View Gallery</h2>
+        <p>
+            Enjoy all the arts , posted on various sites ,collected and curated for you on my gallery page
+        </p>
+        <br />
+        <p><a class="btn btn-danger" href="@Url.Action("Gallery","Image")"><i class="fa fa-image"></i>  Go to Gallery Now &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Commission Paintings</h2>
+        <p>Commission paintings of the highest quality and get them delivered via email within a short time.
+            Sign Up or Login Now to get access to this premium feature..!!
+        </p>
+        <div class="form-inline" style="display:inline-block">
+            <p class="form-inline"><a class="btn btn-danger" href="@Url.Action("Signup","Account")"><i class="fa fa-user-plus"></i>  Sign Up &raquo;</a></p><p class="form-inline"><a class="btn btn-danger" href="@Url.Action("Login","Account")"><i class="fa fa-sign-in"></i>  Login &raquo;</a></p>
+        </div>
+    </div>
+    
+</div>

@@ -1,0 +1,147 @@
+﻿@model ArtStattion.Models.CommissionRequestModel
+
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+<h2 style="font-family:'fantasy'">@Model.Title</h2>
+
+
+
+
+    @using (Html.BeginForm())
+    {
+        
+<div class="form-horizontal">
+    <hr />
+    @Html.HiddenFor(model => model.CommID)
+    <div class="form-group">
+        @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+
+            @if (User.IsInRole("User"))
+            {
+                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @Value = User.Identity.Name, @readonly = "readonly", @class = "form-control" , placeholder=User.Identity.Name} })
+            }
+            else
+            {
+                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", placeholder = User.Identity.Name } })
+            }
+            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <br />
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CommDesc, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.CommDesc, new { htmlAttributes = new { @class = "form-control", placeholder =""} })
+            @Html.ValidationMessageFor(model => model.CommDesc, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <br />
+
+    @{
+        List<SelectListItem> mlist = new List<SelectListItem>();
+        mlist.Add(new SelectListItem { Text = "Select a commission category", Value = "Select" });
+        mlist.Add(new SelectListItem { Text = "Head Shot Only : Rs.500", Value = "Head Shot Only : Rs.500" });
+        mlist.Add(new SelectListItem { Text = "Half Body : Rs.1000", Value = "Half Body : Rs.1000" });
+        mlist.Add(new SelectListItem { Text = "Full Body Without Background : Rs.2200", Value = "Full Body Without Background : Rs.2200" });
+        mlist.Add(new SelectListItem { Text = "Full Body With Background : Rs.3200", Value = "Full Body With Background : Rs.3200" });
+    }
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CommTypeID, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.CommTypeID, mlist)
+            @Html.ValidationMessageFor(model => model.CommTypeID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+
+    <br />
+
+
+
+
+    @{
+        List<SelectListItem> alist = new List<SelectListItem>();
+        alist.Add(new SelectListItem { Text = "UnDecided", Value = "UnDecided", Selected = true });
+        alist.Add(new SelectListItem { Text = "Approved", Value = "Approved" });
+        alist.Add(new SelectListItem { Text = "Rejected", Value = "Rejected" });
+
+    }
+
+    @if (User.IsInRole("Admin"))
+    {
+        <div class="form-group">
+            @Html.LabelFor(model => model.Approval, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Approval, alist)
+                @Html.ValidationMessageFor(model => model.Approval, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    }
+
+
+
+
+    <br />
+
+
+
+
+
+    @{
+        List<SelectListItem> slist = new List<SelectListItem>();
+        slist.Add(new SelectListItem { Text = "Pending", Value = "Pending", Selected = true });
+        slist.Add(new SelectListItem { Text = "Completed", Value = "Completed" });
+        slist.Add(new SelectListItem { Text = "In Progress", Value = "In Progress" });
+
+    }
+
+    @if (User.IsInRole("Admin"))
+    {
+        <div class="form-group">
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Status, slist)
+                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    }
+
+
+
+
+    <br />
+
+
+
+
+
+</div>
+
+        <br />
+
+
+        <div>
+            <input type="submit" value="Submit" class="btn btn-primary">
+            <input type="reset" value="Reset" class="btn btn-primary">
+        </div>
+
+
+
+
+    }
+
+
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval");
+}

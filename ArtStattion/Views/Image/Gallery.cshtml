@@ -1,0 +1,107 @@
+﻿@model IEnumerable<ArtStationWebApi.Models.Image>
+
+@{
+    ViewBag.Title = "Gallery";
+}
+
+    <head>
+
+        <link href="~/Content/bootstrap.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" integrity="sha256-HAaDW5o2+LelybUhfuk0Zh2Vdk8Y2W2UeKmbaXhalfA=" crossorigin="anonymous" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.js" integrity="sha256-jGAkJO3hvqIDc4nIY1sfh/FPbV+UK+1N+xJJg6zzr7A=" crossorigin="anonymous"></script>
+        <script src="~/Scripts/bootstrap.js"></script>
+        <script src="~/Scripts/jquery-3.4.1.js"></script>
+        <script src="~/Scripts/bootstrap.min.js"></script>
+    </head>
+    
+<div class="container">
+        <div style="float:left">
+            <h2 style="font-family:'fantasy'">Gallery</h2>
+            @*<a href="@Url.Action("AddImage","Image")" class="btn btn-primary"><i class="fa fa-plus"></i>  Upload New Image</a>*@
+        </div>
+
+        @if (User.Identity.IsAuthenticated)
+        {
+
+            if (User.IsInRole("admin"))
+            {
+                <div style="float:right">
+                     <a href="@Url.Action("AddImage", "Image")" class="btn btn-primary"><i class="fa fa-plus"></i>  Upload New Image</a>
+                </div>
+            }
+        }
+
+    </div>
+
+
+<hr />
+
+
+<div class="container gallery" >
+    
+    <div class="row" style="width:110%">
+
+
+        @*@foreach (var item in Model)
+        {
+            <div class="col-lg-4 col-md-4 col-sm-4 col-12 container-fluid">
+                <img src="@Url.Content(item.ImagePath)" class="img-responsive img-rounded " alt="@item.Title" />
+
+            </div>
+        }*@
+        @foreach (var item in Model)
+        {
+            string loc = item.ImagePath;
+            loc = loc.Remove(0,8);
+        
+        
+            <div id="demolightbox" class="   col-lg-4 col-md-4 col-sm-4 col-12 container-fluid" style="padding-right: 20px">
+                @*<a href="@loc" class="thumbnail img-responsive" target="_self"><img src="@loc"><i class="fa fa-expand" style="position:relative;"></i></a>
+
+            <div style="float:right">
+                <a href="@Url.Action("DeleteImage", "Image", new {id = @item.ImageID})" class="btn btn-primary"><i class="fa fa-trash"></i>  Delete</a>
+            </div>*@
+
+
+                <div class="" style="width: 400px;height: 580px;position:relative;padding: 20px; padding-right: 20px">
+                    <a  href="@loc"  class="thumbnail img-responsive"  style="position:absolute;left:0;top:0;bottom:0;right:0;"><img src="@loc" style="transition: 1s ease; transition: 1s ease; "></a>
+
+                    <div style="position:relative;pointer-events: none;z-index: 1;">
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <p><a href="@Url.Action("DeleteImage", "Image", new {id = @item.ImageID})" class="btn btn-primary btn-danger" style="pointer-events: all; position: relative;  "><i class="fa fa-trash"></i>  Delete</a></p>
+                        }
+
+                    </div>
+                </div>
+
+
+
+            </div>
+        
+        
+            
+        }
+
+    </div>
+
+       
+</div>
+<div>
+
+</div>
+
+
+
+<script>
+    $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+        event.preventDefault();
+        $(this).ekkoLightbox();
+    });
+
+   
+</script>
+
+
+
